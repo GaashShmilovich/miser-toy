@@ -1,24 +1,19 @@
-<script>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
   <RouterView />
 </template>
+
+<script>
+import { RouterView } from "vue-router";
+import { showSuccessMsg } from "./services/event-bus.service";
+import UserMsg from "./components/UserMsg.vue";
+export default {
+  created() {
+    this.$store
+      .dispatch({ type: "loadToys" })
+      .then(() => showSuccessMsg("HomePage Loaded"));
+  },
+  components: {
+    UserMsg,
+  },
+};
+</script>

@@ -1,20 +1,31 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
+import ToyIndex from '../views/ToyIndex.vue'
+import ToyEdit from '../views/ToyEdit.vue'
+import ToyDetails from '../views/ToyDetails.vue'
+
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      redirect: '/toy'
     },
     {
-      path: '/about',
-      name: 'about',
-      component: AboutView
-    }
+      path: '/toy',
+      name: 'toy',
+      component: ToyIndex,
+      children: [
+        {
+          path: 'edit/:toyId?',
+          component: ToyEdit
+        },
+        {
+          path: 'details/:toyId',
+          component: ToyDetails
+        },
+      ]
+    },
   ]
 })
 

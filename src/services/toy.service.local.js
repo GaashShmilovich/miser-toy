@@ -46,7 +46,9 @@ function getEmptyToy() {
 function _createToys() {
 	let toys = utilService.loadFromStorage(TOY_KEY)
 	if (!toys || !toys.length) {
-		toys = [_createToy('Superman', utilService.getRandomIntInclusive(20, 100)), _createToy('Batman', utilService.getRandomIntInclusive(20, 150)), _createToy('Ironman', utilService.getRandomIntInclusive(20, 100))]
+		toys = [_createToy('Superman', utilService.getRandomIntInclusive(20, 100)),
+		_createToy('Batman', utilService.getRandomIntInclusive(20, 150)),
+		_createToy('Ironman', utilService.getRandomIntInclusive(20, 100))]
 		utilService.saveToStorage(TOY_KEY, toys)
 	}
 	return toys
@@ -56,11 +58,11 @@ function _createToy(name, price) {
 	return {
 		_id: utilService.makeId(),
 		name,
-		price,
+		price: price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
 		labels: [
-			{ title: 'Doll', color: '#6d28d9' },
-			{ title: 'Battery Powered', color: '#71717a' },
-			{ title: 'Baby', color: '#2563eb' },
+			'Doll',
+			'Battery Powered',
+			'Baby',
 		],
 		createdAt: Date.now(),
 		inStock: true,
