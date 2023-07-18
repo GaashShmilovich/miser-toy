@@ -10,10 +10,11 @@ export const toyStore = {
             status: '',
             pageIdx: 0,
             pageSize: 5,
+            labels: [],
         },
         sortBy: {
             by: '',
-            desc: 1,
+            desc: false,
         },
     },
     getters: {
@@ -30,11 +31,12 @@ export const toyStore = {
 
             return ((dones / total) * 100).toFixed(2)
         },
-        toysToDisplay({ filterBy, toys }) {
+        toysToDisplay(state) {
+            const { filterBy, toys, sortBy } = state
             if (!toys) return null
 
-            const { status, txt, pageIdx, pageSize } = filterBy
-            let filteredToys = toys
+            const { status, txt, pageIdx, pageSize, labels } = filterBy
+            let filteredToys = [...toys]
 
             const regex = new RegExp(txt, 'i')
             filteredToys = filteredToys.filter((toy) => regex.test(toy.name))
@@ -46,9 +48,30 @@ export const toyStore = {
                         (!toy.isDone && status === 'in stock')
                 )
             }
+            if (labels.length > 0) {
+                filteredToys = filteredToys.filter((toy) => {
+                    const toyLabelsArray = [...toy.labels]
+                    return toyLabelsArray.some((label) => labels.includes(label))
+                })
+            }
 
-            const startIdx = pageIdx * pageSize
-            filteredToys = filteredToys.slice(startIdx, startIdx + pageSize)
+            const { by, desc } = sortBy
+            if (by === "name") {
+                filteredToys.sort((a, b) => (desc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)))
+
+            } else if (by === "price") {
+                filteredToys.sort((a, b) => (desc ? a.price - b.price : b.price - a.price))
+
+            } else if (by === "createdAt") {
+                filteredToys.sort((a, b) => (desc ? a.createdAt - b.createdAt : b.createdAt - a.createdAt))
+            }
+
+            // const startIdx = pageIdx * pageSize
+            // return filteredToys.slice(startIdx, startIdx + pageSize)
+
+
+            // const startIdx = pageIdx * pageSize
+            // filteredToys = filteredToys.slice(startIdx, startIdx + pageSize)
 
             return filteredToys
         },
@@ -73,6 +96,9 @@ export const toyStore = {
         },
         setFilterBy(state, { filterBy }) {
             state.filterBy = filterBy
+        },
+        setSortBy(state, sortBy) {
+            state.sortBy = sortBy
         },
     },
     actions: {

@@ -1,6 +1,6 @@
 <template>
   <li class="toy-preview flex space-between">
-    <p @click="$emit('toggled')" :class="done">
+    <p @click="$emit('toggled')" >
         <h3>{{ toy.name }}</h3>
     </p>
 
@@ -27,9 +27,6 @@ export default {
   name: "ToyPreview",
   props: ["toy"],
   computed: {
-    done() {
-      return { done: this.toy.isDone };
-    },
   },
 };
 </script>
