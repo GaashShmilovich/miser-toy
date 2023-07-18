@@ -7,6 +7,18 @@
       type="text"
       placeholder="Search todo.."
     />
+    <label for="multiple-select">Select multiple options:</label>
+    <select
+      id="multiple-select"
+      name="multiple-options"
+      v-model="filterBy.labels"
+      @change="setFilterLabels"
+      multiple
+    >
+      <option value="Doll">Doll</option>
+      <option value="Battery Powered">Battery Powered</option>
+      <option value="Baby">Baby</option>
+    </select>
     <div class="filter-btns flex align-center">
       <FilterBtn
         v-for="button in buttons"
@@ -15,6 +27,13 @@
         @filtered="setFilterStatus"
       />
     </div>
+    <select v-model="sortBy.by" @change="applySort">
+      <option value="none">None</option>
+      <option value="name">Name</option>
+      <option value="price">Price</option>
+      <option value="createdAt">Created At</option>
+    </select>
+    <button @click="toggleSortDirection">Toggle Sort Direction</button>
   </section>
 </template>
 <script>
@@ -29,10 +48,11 @@ export default {
       filterBy: {
         txt: "",
         status: false,
+        labels: [],
       },
       sortBy: {
-        by: "",
-        desc: 1,
+        by: "none",
+        desc: false,
       },
       buttons: [
         {
@@ -67,6 +87,21 @@ export default {
     setFilterTxt() {
       this.$emit("filteredTxt", this.filterBy.txt);
     },
+
+    setFilterLabels() {
+      this.$emit("filteredLabels", this.filterBy.labels);
+      console.log("this.filterBy.labels", this.filterBy.labels);
+    },
+    applySort() {
+      this.$store.commit("setSortBy", { ...this.sortBy });
+    },
+
+    toggleSortDirection() {
+      this.sortBy.desc = !this.sortBy.desc;
+      this.applySort();
+    },
   },
+
+  computed: {},
 };
 </script>

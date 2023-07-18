@@ -3,6 +3,8 @@
     <ToyFilter
       @filteredTxt="debounceHandler"
       @filteredStatus="setFilterByStatus"
+      @filteredLabels="setFilterByLabels"
+      @setSortBy="setSortBy"
     />
     <ToyList
       v-if="toys"
@@ -38,6 +40,7 @@ export default {
       filterBy: {
         txt: "",
         status: "",
+        labels: [],
         pageIdx: 0,
         pageSize: 5,
       },
@@ -75,9 +78,6 @@ export default {
 
       // If filtering in backend/service
       // this.isLoading = true
-      this.$store
-        .dispatch({ type: "loadToys", filterBy })
-        .then(() => (this.isLoading = false));
     },
     setPage(diff) {
       this.filterBy.pageIdx += diff;
@@ -96,6 +96,13 @@ export default {
     setFilterByStatus(status) {
       this.filterBy.status = status;
       this.filterToys();
+    },
+    setFilterByLabels(labels) {
+      this.filterBy.labels = labels;
+      this.filterToys();
+    },
+    setSortBy(sortBy) {
+      this.$store.commit({ type: "setSortBy", sortBy });
     },
   },
   computed: {
