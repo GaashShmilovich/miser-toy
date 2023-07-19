@@ -40,12 +40,7 @@ export const toyStore = {
             } else if (by === "createdAt") {
                 filteredToys.sort((a, b) => (desc ? a.createdAt - b.createdAt : b.createdAt - a.createdAt))
             }
-            if (labels.length > 0) {
-                filteredToys = filteredToys.filter((toy) => {
-                    const toyLabelsArray = [...toy.labels]
-                    return toyLabelsArray.some((label) => labels.includes(label))
-                })
-            }
+
 
             // const startIdx = pageIdx * pageSize
             // return filteredToys.slice(startIdx, startIdx + pageSize)

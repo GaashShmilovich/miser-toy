@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <section class="todo-filter">
     <div class="input-container">
       <div class="input">
@@ -45,43 +44,7 @@
         <option value="createdAt">Created At</option>
       </select>
       <button @click="toggleSortDirection">Toggle Sort Direction</button>
-=======
-  <section class="todo-filter flex space-between">
-    <input
-      class="input"
-      v-model="filterBy.txt"
-      @input="setFilterTxt"
-      type="text"
-      placeholder="Search todo.."
-    />
-    <label for="multiple-select">Select multiple options:</label>
-    <select
-      id="multiple-select"
-      name="multiple-options"
-      v-model="filterBy.labels"
-      @change="setFilterLabels"
-      multiple
-    >
-      <option value="Doll">Doll</option>
-      <option value="Battery Powered">Battery Powered</option>
-      <option value="Baby">Baby</option>
-    </select>
-    <div class="filter-btns flex align-center">
-      <FilterBtn
-        v-for="button in buttons"
-        :button="button"
-        :key="button.id"
-        @filtered="setFilterStatus"
-      />
->>>>>>> effaded1746e67828e47374e3a2b0d0bda83dd24
     </div>
-    <select v-model="sortBy.by" @change="applySort">
-      <option value="none">None</option>
-      <option value="name">Name</option>
-      <option value="price">Price</option>
-      <option value="createdAt">Created At</option>
-    </select>
-    <button @click="toggleSortDirection">Toggle Sort Direction</button>
   </section>
 </template>
 <script>
