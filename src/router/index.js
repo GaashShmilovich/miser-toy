@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import ToyIndex from '../views/ToyIndex.vue'
 import ToyEdit from '../views/ToyEdit.vue'
 import ToyDetails from '../views/ToyDetails.vue'
+import HomePage from '../views/HomePage.vue'
 
 
 const router = createRouter({
@@ -9,7 +10,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/toy'
+      redirect: '/home'
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomePage
     },
     {
       path: '/toy',

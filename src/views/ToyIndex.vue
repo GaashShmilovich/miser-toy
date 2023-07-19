@@ -12,10 +12,6 @@
       @removed="removeToy"
       @toggled="toggleToy"
     />
-    <div class="flex space-between">
-      <button class="btn" @click="setPage(-1)">Prev</button>
-      <button class="btn" @click="setPage(1)">Next</button>
-    </div>
     <RouterView />
   </section>
 </template>
@@ -44,6 +40,10 @@ export default {
         pageIdx: 0,
         pageSize: 5,
       },
+      // sortBy: {
+      //   by: "",
+      //   desc: false,
+      // },
     };
   },
   created() {
@@ -74,7 +74,8 @@ export default {
     },
     filterToys() {
       const filterBy = { ...this.filterBy };
-      this.$store.commit({ type: "setFilterBy", filterBy });
+      // this.$store.commit({ type: "setFilterBy", filterBy });
+      this.$store.dispatch({ type: "loadToys", filterBy });
 
       // If filtering in backend/service
       // this.isLoading = true

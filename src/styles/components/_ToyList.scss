@@ -1,0 +1,36 @@
+.toy-list {
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    align-items: center;
+    height: 600px;
+    padding: 0;
+  }
+}
+
+.toy-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  flex-basis: calc(33.33% - 20px);
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-add-container {
+  display: flex;
+  justify-content: start;
+  margin-block: 2em;
+
+  .btn {
+    @include button-style;
+  }
+}

@@ -1,17 +1,10 @@
-import { toyService } from '../services/toy.service.local.js'
+import { toyService } from '../services/toy.service.js'
 
 export const toyStore = {
     state: {
         toys: null,
         toysCount: null,
         currToy: null,
-        filterBy: {
-            txt: '',
-            status: '',
-            pageIdx: 0,
-            pageSize: 5,
-            labels: [],
-        },
         sortBy: {
             by: '',
             desc: false,
@@ -32,36 +25,18 @@ export const toyStore = {
             return ((dones / total) * 100).toFixed(2)
         },
         toysToDisplay(state) {
-            const { filterBy, toys, sortBy } = state
+            const { toys, sortBy } = state
             if (!toys) return null
 
-            const { status, txt, pageIdx, pageSize, labels } = filterBy
+            // const { status, txt, pageIdx, pageSize, labels } = filterBy
             let filteredToys = [...toys]
-
-            const regex = new RegExp(txt, 'i')
-            filteredToys = filteredToys.filter((toy) => regex.test(toy.name))
-
-            if (status) {
-                filteredToys = filteredToys.filter(
-                    (toy) =>
-                        (toy.isDone && status === 'not in stock') ||
-                        (!toy.isDone && status === 'in stock')
-                )
-            }
-            if (labels.length > 0) {
-                filteredToys = filteredToys.filter((toy) => {
-                    const toyLabelsArray = [...toy.labels]
-                    return toyLabelsArray.some((label) => labels.includes(label))
-                })
-            }
 
             const { by, desc } = sortBy
             if (by === "name") {
                 filteredToys.sort((a, b) => (desc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)))
 
             } else if (by === "price") {
-                filteredToys.sort((a, b) => (desc ? a.price - b.price : b.price - a.price))
-
+                filteredToys.sort((a, b) => (desc ? a.price.localeCompare(b.price) : b.price.localeCompare(a.price)))
             } else if (by === "createdAt") {
                 filteredToys.sort((a, b) => (desc ? a.createdAt - b.createdAt : b.createdAt - a.createdAt))
             }
@@ -94,17 +69,14 @@ export const toyStore = {
             const idx = state.toys.findIndex((toy) => toy._id === toyId)
             state.toys.splice(idx, 1)
         },
-        setFilterBy(state, { filterBy }) {
-            state.filterBy = filterBy
-        },
         setSortBy(state, sortBy) {
             state.sortBy = sortBy
         },
     },
     actions: {
-        loadToys(context) {
+        loadToys(context, { filterBy }) {
             toyService
-                .query()
+                .query(filterBy)
                 .then((toys) => {
                     context.commit({ type: 'setToys', toys })
                 })
@@ -114,6 +86,7 @@ export const toyStore = {
         },
         saveToy({ commit, dispatch }, { toy }) {
             const actionType = toy._id ? 'updateToy' : 'addToy'
+            console.log('type', actionType)
             return toyService.save(toy).then((savedToy) => {
                 commit({ type: actionType, toy: savedToy })
                 let txt = actionType === 'addToy' ? 'Added a toy' : 'Updated toy'
@@ -138,12 +111,12 @@ export const toyStore = {
             })
         },
     },
-    loadToys({ commit }, { filterBy }) {
-        toyService
-            .query(filterBy)
-            .then(toys => commit({ type: 'setToys', toys }))
-            .catch(err => {
-                throw err
-            })
-    },
+    // loadToys({ commit }, { filterBy }) {
+    //     toyService
+    //         .query(filterBy)
+    //         .then(toys => commit({ type: 'setToys', toys }))
+    //         .catch(err => {
+    //             throw err
+    //         })
+    // },
 }

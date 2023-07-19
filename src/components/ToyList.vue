@@ -1,6 +1,9 @@
 <template>
   <section class="toy-list">
-    <RouterLink class="btn btn-add" to="/toy/edit">Add toy</RouterLink>
+    <div class="btn-add-container">
+      <RouterLink class="btn btn-add" to="/toy/edit">Add toy</RouterLink>
+    </div>
+
     <ul v-if="toys.length">
       <ToyPreview
         v-for="toy in toys"

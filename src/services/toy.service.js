@@ -8,8 +8,8 @@ export const toyService = {
 	getEmptyToy,
 }
 
-function query() {
-	return httpService.get('toy')
+function query(filterBy) {
+	return httpService.get('toy', filterBy)
 }
 
 function getById(toyId) {
@@ -17,10 +17,11 @@ function getById(toyId) {
 }
 
 function remove(toyId) {
-	httpService.delete(`toy/${toyId}`)
+	return httpService.delete(`toy/${toyId}`)
 }
 
 function save(toy) {
+	console.log('id', toy)
 	if (toy._id) {
 		return httpService.put(`toy/${toy._id}`, toy)
 	}

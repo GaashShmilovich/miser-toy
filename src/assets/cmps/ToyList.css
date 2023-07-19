@@ -1,0 +1,71 @@
+.toy-list {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.toy-list ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+  gap: 10px;
+}
+
+.toy-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toy-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.toy-name {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.toy-card-body {
+  margin-top: 10px;
+}
+
+.toy-label {
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-right: 5px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.toy-price {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.toy-card-footer {
+  margin-top: 10px;
+}
+
+/* .btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+} */
